@@ -1,31 +1,20 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 import classes from './App.module.css';
+import { Spinner } from '@chakra-ui/react';
+import Document from './components/Document/Document';
+
+const APP_LOADING_TIMEOUT = 2000;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  return (
-    <div className={classes.app}>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className={classes.logo} alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className={clsx(classes.logo, classes.react)} alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className={classes.card}>
-        <button onClick={() => setCount((count) => count + 100)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>Click on the Vite and React logos to learn more</p>
-    </div>
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, APP_LOADING_TIMEOUT);
+  }, []);
+
+  return <div className={classes.app}>{loading ? <Spinner size="xl" /> : <Document />}</div>;
 }
 
 export default App;
